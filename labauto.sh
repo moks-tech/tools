@@ -2,7 +2,7 @@
 # Install a DevOps tool from devops-tools/<tool>.sh. Usage: labauto.sh [tool]
 # Install as a command with: sudo ln -s /tmp/tools/labauto.sh /usr/bin/labauto
 set -euo pipefail
-REPO=https://github.com/mrjithendar/tools.git
+REPO=https://github.com/moks-tech/tools.git
 DIR=/tmp/tools
 
 if [[ -d "$DIR/.git" ]]; then

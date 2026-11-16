@@ -98,7 +98,7 @@ def test_kube_state_metrics_is_scraped_and_bounded(values, job):
     assert keep['action'] == 'keep' and keep['source_labels'] == ['__name__']
     directory = MINIKUBE / 'deploy/minikube/observability/grafana/dashboards'
     if not directory.is_dir():
-        pytest.skip(f'{directory} not found: clone mrjithendar/miniKube beside tools or set MINIKUBE_DIR')
+        pytest.skip(f'{directory} not found: clone moks-tech/kubernetes beside tools or set MINIKUBE_DIR')
     dashboards = ''.join(p.read_text() for p in directory.glob('*.json'))
     for metric in set(re.findall(r'\bkube_[a-z0-9_]+', dashboards)) - {'kube_namespaces', 'kube_identity'}:
         assert re.fullmatch(keep['regex'], metric), metric

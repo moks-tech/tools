@@ -90,7 +90,7 @@ controller's IAM role and Pod Identity. Confirm your current address is still in
 (`curl -s https://checkip.amazonaws.com`), then commit and push. **Create infrastructure** runs on the self-hosted runner.
 
 ```bash
-gh run watch -R mrjithendar/tools $(gh run list -R mrjithendar/tools --workflow 'Create infrastructure' --limit 1 --json databaseId -q '.[0].databaseId')
+gh run watch -R moks-tech/tools $(gh run list -R moks-tech/tools --workflow 'Create infrastructure' --limit 1 --json databaseId -q '.[0].databaseId')
 ```
 
 Then sync the controllers from the hub, in this order. The issuers need the token from step 2 to become Ready:

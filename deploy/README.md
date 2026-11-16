@@ -5,7 +5,7 @@
 | [`eks/`](eks/) | `roboshop-demo` (AWS EKS) | `roboshop-demo`, and `mk4` for the Argo CD hub | Argo CD reading plain YAML; Helm charts for add-ons | [eks/DEPLOY.md](eks/DEPLOY.md) |
 
 The Minikube cluster `mk4` (install scripts, Traefik, Argo CD, the Terraform add-ons and its Argo CD catalog) moved to its
-own repository, [mrjithendar/miniKube](https://github.com/mrjithendar/miniKube), on 2026-11-08. Clone it beside this one.
+own repository, [moks-tech/kubernetes](https://github.com/moks-tech/kubernetes), on 2026-11-08. Clone it beside this one.
 RoboShop workloads are in neither: they live in `roboshop-ai/argocd-eks`. See [What is outside this directory](#what-is-outside-this-directory).
 
 ## Rules

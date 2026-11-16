@@ -5,7 +5,7 @@
 #   bash runner/setup.sh status     # show them
 #   bash runner/setup.sh remove     # stop, unregister and delete them
 #
-# Settings (environment): RUNNER_COUNT (2), RUNNER_REPO (mrjithendar/tools),
+# Settings (environment): RUNNER_COUNT (2), RUNNER_REPO (moks-tech/tools),
 # RUNNER_DIR (~/actions-runners/tools), RUNNER_NAME (short hostname), RUNNER_LABELS (extra labels).
 #
 # GitHub token, first one found: GH_TOKEN / GITHUB_TOKEN, `gh auth token`, or the AWS Secrets Manager secret
@@ -17,7 +17,7 @@ set -euo pipefail
 umask 077
 
 ROOT=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
-REPO=${RUNNER_REPO:-mrjithendar/tools}
+REPO=${RUNNER_REPO:-moks-tech/tools}
 COUNT=${RUNNER_COUNT:-2}
 BASE=${RUNNER_DIR:-$HOME/actions-runners/tools}
 NAME=${RUNNER_NAME:-$(hostname -s)}

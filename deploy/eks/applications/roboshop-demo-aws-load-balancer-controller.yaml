@@ -31,6 +31,6 @@ spec:
       releaseName: aws-load-balancer-controller
       valueFiles:
       - $values/deploy/eks/helm-values/aws-load-balancer-controller.yaml
-  - repoURL: https://github.com/mrjithendar/tools.git
+  - repoURL: https://github.com/moks-tech/tools.git
     targetRevision: master
     ref: values

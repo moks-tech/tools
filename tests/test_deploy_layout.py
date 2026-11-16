@@ -187,7 +187,7 @@ def test_no_command_applies_a_parent_directory():
 
 
 def test_minikube_moved_to_its_own_repository():
-    # deploy/minikube, minikube-infrastructure, the mk4 scripts and workflows live in mrjithendar/miniKube.
+    # deploy/minikube, minikube-infrastructure, the mk4 scripts and workflows live in moks-tech/kubernetes.
     for name in ('eks-argocd', 'minikube', 'minikube-argocd', 'observability', 'deploy/minikube', 'minikube-infrastructure',
                  'scripts/argocd', 'deploy-argocd.sh', 'bootstrap-cluster.sh', 'deploy-minikube.sh'):
         assert not (ROOT / name).exists(), name

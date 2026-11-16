@@ -30,6 +30,6 @@ spec:
       releaseName: istio-ingressgateway
       valueFiles:
       - $values/deploy/eks/helm-values/istio-ingressgateway.yaml
-  - repoURL: https://github.com/mrjithendar/tools.git
+  - repoURL: https://github.com/moks-tech/tools.git
     targetRevision: master
     ref: values

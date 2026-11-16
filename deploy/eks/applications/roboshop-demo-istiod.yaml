@@ -42,6 +42,6 @@ spec:
       releaseName: istiod
       valueFiles:
       - $values/deploy/eks/helm-values/istiod.yaml
-  - repoURL: https://github.com/mrjithendar/tools.git
+  - repoURL: https://github.com/moks-tech/tools.git
     targetRevision: master
     ref: values
