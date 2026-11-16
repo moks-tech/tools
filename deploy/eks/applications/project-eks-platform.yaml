@@ -7,7 +7,8 @@ metadata:
 spec:
   description: Controllers on the roboshop-demo EKS cluster, managed from Argo CD on mk4
   sourceRepos:
-  - https://github.com/mrjithendar/tools.git
+  - https://github.com/moks-tech/tools.git
+  - https://github.com/mrjithendar/tools.git  # until every Application names moks-tech (2026-11-16 org move)
   - https://aws.github.io/eks-charts
   - https://istio-release.storage.googleapis.com/charts
   - https://kiali.org/helm-charts

@@ -18,10 +18,10 @@ APP = Path(os.environ.get('ROBOSHOP_AI_DIR', TOOLS.parent / 'roboshop-ai')).reso
 SITE = Path(os.environ.get('JITHENDAR_COM_DIR', TOOLS.parent / 'jithendar.com')).resolve()
 MINIKUBE = Path(os.environ.get('MINIKUBE_DIR', TOOLS.parent / 'miniKube')).resolve()
 ARGOCD = APP / 'argocd-eks'                         # roboshop-ai's Argo CD Applications for EKS
-TOOLS_REPO = 'https://github.com/mrjithendar/tools.git'
-APP_REPO = 'https://github.com/mrjithendar/roboshop-ai.git'
-SITE_REPO = 'https://github.com/mrjithendar/jithendar.com.git'
-MINIKUBE_REPO = 'https://github.com/mrjithendar/miniKube.git'
+TOOLS_REPO = 'https://github.com/moks-tech/tools.git'
+APP_REPO = 'https://github.com/moks-tech/roboshop-ai.git'
+SITE_REPO = 'https://github.com/moks-tech/jithendar.com.git'
+MINIKUBE_REPO = 'https://github.com/moks-tech/kubernetes.git'
 CHECKOUTS = {TOOLS_REPO: TOOLS, APP_REPO: APP, SITE_REPO: SITE, MINIKUBE_REPO: MINIKUBE}
 
 

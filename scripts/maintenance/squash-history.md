@@ -18,7 +18,7 @@ After committing this script and any other work, execute intentionally:
 python3 scripts/maintenance/squash-history.py --apply
 ```
 
-Defaults are `mrjithendar/roboshop-ai`, `master`, and the baseline title
+Defaults are `moks-tech/roboshop-ai`, `master`, and the baseline title
 “Establish RoboShop AI platform baseline”. Override with `--repo`, `--branch`,
 and `--message`. Local and remote tips must match. The script refuses to squash
 an already single-commit branch. It does not commit uncommitted files for you.

@@ -11,7 +11,7 @@ from repos import MINIKUBE  # noqa: E402
 MK4_ALLOY = MINIKUBE / 'deploy/minikube/observability/loki/config.alloy'
 
 
-@unittest.skipUnless(MK4_ALLOY.is_file(), f'{MK4_ALLOY} not found: clone mrjithendar/miniKube beside tools or set MINIKUBE_DIR')
+@unittest.skipUnless(MK4_ALLOY.is_file(), f'{MK4_ALLOY} not found: clone moks-tech/kubernetes beside tools or set MINIKUBE_DIR')
 class LokiTests(unittest.TestCase):
     def test_eks_alloy_differs_from_mk4_only_in_destination(self):
         mk4=MK4_ALLOY.read_text()

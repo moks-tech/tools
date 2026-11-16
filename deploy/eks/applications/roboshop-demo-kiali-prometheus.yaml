@@ -29,6 +29,6 @@ spec:
       releaseName: kiali-prometheus
       valueFiles:
       - $values/deploy/eks/helm-values/kiali-prometheus.yaml
-  - repoURL: https://github.com/mrjithendar/tools.git
+  - repoURL: https://github.com/moks-tech/tools.git
     targetRevision: master
     ref: values

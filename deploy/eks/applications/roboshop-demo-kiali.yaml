@@ -29,6 +29,6 @@ spec:
       releaseName: kiali
       valueFiles:
       - $values/deploy/eks/helm-values/kiali.yaml
-  - repoURL: https://github.com/mrjithendar/tools.git
+  - repoURL: https://github.com/moks-tech/tools.git
     targetRevision: master
     ref: values

@@ -23,7 +23,7 @@ spec:
     - PruneLast=true
     - CreateNamespace=true
   source:
-    repoURL: https://github.com/mrjithendar/tools.git
+    repoURL: https://github.com/moks-tech/tools.git
     targetRevision: master
     path: deploy/eks/manifests/alloy
     directory:

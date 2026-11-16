@@ -2,12 +2,12 @@
 
 - **[labauto](#labauto)**: one-command installers for DevOps tools (`labauto.sh`, `devops-tools/`).
 - **[Cluster tooling](#cluster-tooling)**: AWS Terraform and the EKS deployment files. The Minikube cluster
-  `mk4` is in [miniKube](https://github.com/mrjithendar/miniKube).
+  `mk4` is in [miniKube](https://github.com/moks-tech/kubernetes).
 
 ## labauto
 
 ```bash
-git clone https://github.com/mrjithendar/tools.git
+git clone https://github.com/moks-tech/tools.git
 cd tools
 sudo ln -s $(pwd)/labauto.sh /usr/bin/labauto
 
@@ -22,7 +22,7 @@ the menu automatically.
 
 ## Cluster tooling
 
-The Minikube cluster `mk4` moved to its own repository, [mrjithendar/miniKube](https://github.com/mrjithendar/miniKube),
+The Minikube cluster `mk4` moved to its own repository, [moks-tech/kubernetes](https://github.com/moks-tech/kubernetes),
 on 2026-11-08, with the same paths: `deploy/minikube/`, `minikube-infrastructure/`, `scripts/argocd/`, the root
 wrappers (`deploy-minikube.sh`, `bootstrap-cluster.sh`, `deploy-argocd.sh`, `create-secrets.sh`,
 `harbor-pull-secret.sh`) and the workflows `check-mk-infrastructure.yml`, `create-mk-infrastructure.yml` and
@@ -49,7 +49,7 @@ client-side commands. x86_64 and ARM64 only.
 
 The shop's Argo CD catalog, the microservices, their manifests and the operations docs live in
 roboshop-ai. The shared jithendar.com certificate and `patch-ssl.sh` live in
-[jithendar.com](https://github.com/mrjithendar/jithendar.com). Clone them side by side, or set `ROBOSHOP_AI_DIR` /
+[jithendar.com](https://github.com/moks-tech/jithendar.com). Clone them side by side, or set `ROBOSHOP_AI_DIR` /
 `JITHENDAR_COM_DIR` / `MINIKUBE_DIR`:
 
 ```text

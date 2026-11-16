@@ -82,7 +82,7 @@ def restore(endpoint, original):
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--apply", action="store_true", help="Actually back up, rewrite, push and restore protection")
-    parser.add_argument("--repo", default="mrjithendar/roboshop-ai", help="GitHub owner/repository")
+    parser.add_argument("--repo", default="moks-tech/roboshop-ai", help="GitHub owner/repository")
     parser.add_argument("--branch", default="master", help="Existing branch to squash")
     parser.add_argument("--message", default="Establish RoboShop AI platform baseline", help="New baseline commit title")
     args = parser.parse_args()
