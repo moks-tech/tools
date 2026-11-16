@@ -1,5 +1,5 @@
 # Role that the miniKube repository's .github/workflows/create-mk-infrastructure.yml assumes through GitHub OIDC to read and write the
-# minikube-infrastructure/ state (both now in moks-tech/kubernetes). Any workflow in any moks-tech/* repository can assume it
+# minikube-infrastructure/ state (both now in moks-tech/kubernetes). Any workflow in any moks-tech/* or mrjithendar/* repository can assume it
 # (any branch, tag, pull request or environment). It has AdministratorAccess (full control of the AWS account), plus the state policy below.
 # The GitHub OIDC provider already exists in the account; its ARN is fixed, so it is built, not looked up.
 locals {
@@ -9,7 +9,7 @@ locals {
 
 resource "aws_iam_role" "github_minikube_terraform" {
   name                 = "github-tools-minikube-terraform"
-  description          = "GitHub Actions (any moks-tech/* repository): AdministratorAccess"
+  description          = "GitHub Actions (any moks-tech/* or mrjithendar/* repository): AdministratorAccess"
   max_session_duration = 3600
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -21,16 +21,17 @@ resource "aws_iam_role" "github_minikube_terraform" {
         StringEquals = {
           "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
         }
-        # Wildcards only work with StringLike. Any repo, branch, tag, PR or environment under github.com/moks-tech.
+        # Wildcards only work with StringLike. Any repo, branch, tag, PR or environment under github.com/moks-tech, and
+        # under github.com/mrjithendar, where moks-sre and roboshop-ai stay (2026-11-16).
         StringLike = {
-          "token.actions.githubusercontent.com:sub" = "repo:moks-tech/*"
+          "token.actions.githubusercontent.com:sub" = ["repo:moks-tech/*", "repo:mrjithendar/*"]
         }
       }
     }]
   })
 }
 
-# Full access to the AWS account for any workflow in any moks-tech/* repository.
+# Full access to the AWS account for any workflow in any moks-tech/* or mrjithendar/* repository.
 resource "aws_iam_role_policy_attachment" "github_minikube_terraform_admin" {
   role       = aws_iam_role.github_minikube_terraform.name
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
