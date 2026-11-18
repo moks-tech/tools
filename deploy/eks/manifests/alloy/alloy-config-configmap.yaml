@@ -55,6 +55,10 @@ data:
           raw_route = "route", raw_method = "method", raw_status = "status", raw_duration = "durationMs",
           raw_dependency = "dependency", raw_operation = "operation", raw_error_type = "errorType",
           raw_error_code = "errorCode", raw_outcome = "outcome", raw_logger = "logger_name",
+          // seo-agent (moks-cms services/seo-agent): CrewAI flow, crew, task and tool events (docs/seo/OPERATIONS.md).
+          raw_flow = "flow", raw_step = "step", raw_crew = "crew", raw_agent = "agent", raw_tool = "tool",
+          raw_result = "status", raw_flow_outcome = "outcome", raw_seconds = "seconds", raw_tokens = "tokens",
+          raw_cost = "cost_usd", raw_run_id = "run_id", raw_error_name = "error",
         }
       }
       // Routes may be Next.js patterns (/blog/[slug], /api/auth/[...all]); outcome values come from MOKS
@@ -99,6 +103,56 @@ data:
         source     = "raw_logger"
         expression = `^(?P<logger>[A-Za-z0-9_.$]{1,160})$`
       }
+      // seo-agent names are code identifiers and its numbers plain decimals; free text (a reason, an exception message)
+      // never matches and is dropped. `error` is kept only when it is a bare exception type (TimeoutError).
+      stage.regex {
+        source     = "raw_flow"
+        expression = `^(?P<flow>[a-z][a-z0-9_]{1,63})$`
+      }
+      stage.regex {
+        source     = "raw_step"
+        expression = `^(?P<step>[a-z][a-z0-9_]{1,63})$`
+      }
+      stage.regex {
+        source     = "raw_crew"
+        expression = `^(?P<crew>[a-z][a-z0-9_]{1,63})$`
+      }
+      stage.regex {
+        source     = "raw_agent"
+        expression = `^(?P<agent>[a-z][a-z0-9_]{1,63})$`
+      }
+      stage.regex {
+        source     = "raw_tool"
+        expression = `^(?P<tool>[a-z][a-z0-9_]{1,63})$`
+      }
+      stage.regex {
+        source     = "raw_result"
+        expression = `^(?P<result>queued|running|succeeded|failed|cancelled|paused_budget|completed|incomplete|budget|ok|error|timeout)$`
+      }
+      stage.regex {
+        source     = "raw_flow_outcome"
+        expression = `^(?P<flow_outcome>[a-z][a-z_]{1,39})$`
+      }
+      stage.regex {
+        source     = "raw_seconds"
+        expression = `^(?P<seconds>[0-9]{1,6}(?:\.[0-9]{1,6})?)$`
+      }
+      stage.regex {
+        source     = "raw_tokens"
+        expression = `^(?P<tokens>[0-9]{1,9})$`
+      }
+      stage.regex {
+        source     = "raw_cost"
+        expression = `^(?P<cost_usd>[0-9]{1,4}(?:\.[0-9]{1,8})?(?:[eE]-[0-9]{1,2})?)$`
+      }
+      stage.regex {
+        source     = "raw_run_id"
+        expression = `^(?P<run_id>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$`
+      }
+      stage.regex {
+        source     = "raw_error_name"
+        expression = `^(?P<error_type>[A-Za-z][A-Za-z0-9_.]{0,79})$`
+      }
       // Low-cardinality level label (info/warn/error/...) for fast filtering.
       stage.template {
         source   = "level_label"
@@ -109,7 +163,7 @@ data:
       }
       stage.template {
         source   = "safe_line"
-        template = `event={{ if .event }}{{ .event }}{{ else }}application_log{{ end }} level={{ .level_label }}{{ with .route }} route={{ . }}{{ end }}{{ with .method }} method={{ . }}{{ end }}{{ with .status }} status={{ . }}{{ end }}{{ with .duration_ms }} duration_ms={{ . }}{{ end }}{{ with .operation }} operation={{ . }}{{ end }}{{ with .dependency }} dependency={{ . }}{{ end }}{{ with .outcome }} outcome={{ . }}{{ end }}{{ with .error_type }} error_type={{ . }}{{ end }}{{ with .error_code }} error_code={{ . }}{{ end }}{{ with .logger }} logger={{ . }}{{ end }} trace_id={{ if .trace_id }}{{ .trace_id }}{{ else }}none{{ end }}`
+        template = `event={{ if .event }}{{ .event }}{{ else }}application_log{{ end }} level={{ .level_label }}{{ with .route }} route={{ . }}{{ end }}{{ with .method }} method={{ . }}{{ end }}{{ with .status }} status={{ . }}{{ end }}{{ with .duration_ms }} duration_ms={{ . }}{{ end }}{{ with .operation }} operation={{ . }}{{ end }}{{ with .dependency }} dependency={{ . }}{{ end }}{{ with .outcome }} outcome={{ . }}{{ end }}{{ with .error_type }} error_type={{ . }}{{ end }}{{ with .error_code }} error_code={{ . }}{{ end }}{{ with .logger }} logger={{ . }}{{ end }}{{ with .flow }} flow={{ . }}{{ end }}{{ with .step }} step={{ . }}{{ end }}{{ with .crew }} crew={{ . }}{{ end }}{{ with .agent }} agent={{ . }}{{ end }}{{ with .tool }} tool={{ . }}{{ end }}{{ with .result }} result={{ . }}{{ end }}{{ with .flow_outcome }} flow_outcome={{ . }}{{ end }}{{ with .seconds }} seconds={{ . }}{{ end }}{{ with .tokens }} tokens={{ . }}{{ end }}{{ with .cost_usd }} cost_usd={{ . }}{{ end }}{{ with .run_id }} run_id={{ . }}{{ end }} trace_id={{ if .trace_id }}{{ .trace_id }}{{ else }}none{{ end }}`
       }
       stage.output { source = "safe_line" }
       forward_to = [loki.write.mk4.receiver]
