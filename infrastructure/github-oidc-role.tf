@@ -68,3 +68,34 @@ resource "aws_iam_role_policy_attachment" "github_minikube_terraform_admin" {
 # }
 
 
+
+# Role that this repository's .github/workflows/create-aws-infrastructure.yml assumes through GitHub OIDC to plan and
+# apply infrastructure/ on a GitHub-hosted runner (the self-hosted runner used its EC2 instance role instead).
+# Only master of moks-tech/tools can assume it; that workflow only runs on master. This repo manages IAM roles
+# with AdministratorAccess, so the role needs the same.
+# Bootstrap: this role must be applied once from a workstation before the workflow can use it.
+# moks-tech/tools uses GitHub's immutable subject (gh api repos/moks-tech/tools/actions/oidc/customization/sub).
+resource "aws_iam_role" "github_tools_terraform" {
+  name                 = "github-tools-terraform"
+  description          = "GitHub Actions (moks-tech/tools, master): terraform apply of infrastructure/"
+  max_session_duration = 3600
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect    = "Allow"
+      Principal = { Federated = "arn:aws:iam::${data.aws_caller_identity.bedrock.account_id}:oidc-provider/token.actions.githubusercontent.com" }
+      Action    = "sts:AssumeRoleWithWebIdentity"
+      Condition = {
+        StringEquals = {
+          "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
+          "token.actions.githubusercontent.com:sub" = "repo:moks-tech@257155124/tools@696284066:ref:refs/heads/master"
+        }
+      }
+    }]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "github_tools_terraform_admin" {
+  role       = aws_iam_role.github_tools_terraform.name
+  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
+}
