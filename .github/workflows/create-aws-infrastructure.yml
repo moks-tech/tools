@@ -21,7 +21,7 @@ concurrency:
 jobs:
   terraform:
     if: github.ref == 'refs/heads/master'
-    runs-on: [self-hosted, linux]
+    runs-on: [ubuntu-latest, self-hosted, linux]
     timeout-minutes: 180
     defaults:
       run:
