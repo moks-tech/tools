@@ -1,5 +1,5 @@
 # Role that the miniKube repository's .github/workflows/create-mk-infrastructure.yml assumes through GitHub OIDC to read and write the
-# minikube-infrastructure/ state (both now in moks-tech/kubernetes). Any workflow in any moks-tech/* or mrjithendar/* repository can assume it
+# minikube-infrastructure/ state (both now in moks-tech/kubernetes). Any workflow in moks-tech/kubernetes or any mrjithendar/* repository can assume it
 # (any branch, tag, pull request or environment). It has AdministratorAccess (full control of the AWS account), plus the state policy below.
 # The GitHub OIDC provider already exists in the account; its ARN is fixed, so it is built, not looked up.
 locals {
@@ -9,7 +9,7 @@ locals {
 
 resource "aws_iam_role" "github_minikube_terraform" {
   name                 = "github-tools-minikube-terraform"
-  description          = "GitHub Actions (any moks-tech/* or mrjithendar/* repository): AdministratorAccess"
+  description          = "GitHub Actions (moks-tech/kubernetes or any mrjithendar/* repository): AdministratorAccess"
   max_session_duration = 3600
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -21,17 +21,20 @@ resource "aws_iam_role" "github_minikube_terraform" {
         StringEquals = {
           "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
         }
-        # Wildcards only work with StringLike. Any repo, branch, tag, PR or environment under github.com/moks-tech, and
-        # under github.com/mrjithendar, where moks-sre and roboshop-ai stay (2026-11-16).
+        # Wildcards only work with StringLike. Any repo, branch, tag, PR or environment under github.com/mrjithendar,
+        # plus moks-tech/kubernetes (the miniKube repository after the move to the moks-tech organization). Not
+        # moks-tech/*: that would hand AdministratorAccess to every repository any org member creates.
+        # moks-tech/kubernetes uses GitHub's immutable subject, so its sub carries the owner and repository IDs
+        # (gh api repos/moks-tech/kubernetes/actions/oidc/customization/sub), e.g. ...@583559700:environment:mk4.
         StringLike = {
-          "token.actions.githubusercontent.com:sub" = ["repo:moks-tech/*", "repo:mrjithendar/*"]
+          "token.actions.githubusercontent.com:sub" = ["repo:mrjithendar/*", "repo:moks-tech@257155124/kubernetes@583559700:*"]
         }
       }
     }]
   })
 }
 
-# Full access to the AWS account for any workflow in any moks-tech/* or mrjithendar/* repository.
+# Full access to the AWS account for any workflow in moks-tech/kubernetes or any mrjithendar/* repository.
 resource "aws_iam_role_policy_attachment" "github_minikube_terraform_admin" {
   role       = aws_iam_role.github_minikube_terraform.name
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
