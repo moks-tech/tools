@@ -1,7 +1,7 @@
 name: Check AWS infrastructure
 
-# Runs on GitHub-hosted runners with no AWS access: this repository is public, so pull request code must
-# never reach the self-hosted runner that applies Terraform.
+# Runs on the mk4 runners with no AWS access: this repository is public, so pull request code (forks too) runs
+# there and must never get the role that applies Terraform.
 on:
   workflow_dispatch:
   pull_request:
@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   terraform:
-    runs-on: ubuntu-latest
+    runs-on: mk4
     timeout-minutes: 15
     defaults:
       run:
